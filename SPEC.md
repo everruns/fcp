@@ -9,7 +9,7 @@ sending text and reading text back.
 
 FCP makes one assumption: both actors can understand free-form text.
 Modern AI systems already can, and humans always could, so no schema,
-SDK, or code generation is needed. Capability discovery, parameter
+SDK, or code generation is needed. Capability handshake, parameter
 collection, and error handling happen in natural language — the same
 way a person would ask a service what it does.
 
@@ -39,7 +39,7 @@ intentionally short.
   same two actors that share state on the target side. Sessions are
   carried by an HTTP cookie. An actor without sessions is fully
   conformant.
-- **Discovery** — the (optional) first exchange in which the client
+- **Handshake** — the (optional) first exchange in which the client
   actor asks the target actor what it can do, and the target replies
   in text.
 
@@ -59,7 +59,7 @@ A conformant target actor SHOULD:
 
 4. Respond to `GET` on the same endpoint with a textual self-description
    — who it is, what it can do, and any optional features it supports
-   (auth, sessions, preferred formats). This is the discovery entry
+   (auth, sessions, preferred formats). This is the handshake entry
    point.
 
 A conformant target actor MAY:
@@ -81,7 +81,7 @@ actors at runtime.
 
 Target actor at `https://flights.example.com/fcp`.
 
-### Discovery
+### Handshake
 
 ```http
 GET /fcp HTTP/1.1
