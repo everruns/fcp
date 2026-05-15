@@ -183,6 +183,15 @@ and the handshake invites strangers to talk to it.
   PII handling appropriate to your jurisdiction). Without logs an
   FCP endpoint is essentially un-debuggable, since the contract is
   the conversation.
+- **Pay-per-request via agent payment protocols.** Because the
+  endpoint is plain HTTP, it composes naturally with agent-to-agent
+  payment schemes such as [x402](https://www.x402.org) (HTTP `402
+  Payment Required` + a stablecoin settlement header). Charging
+  even a tiny fee per `POST` — fractions of a cent — flips the
+  economics: legitimate clients barely notice, but a flood of
+  abusive requests becomes expensive enough to be self-limiting.
+  The handshake is the natural place to advertise the price and
+  the accepted payment rails.
 
 None of this is mandated by FCP. The protocol stays minimal; the
 operator chooses how much protection to wrap around it.
