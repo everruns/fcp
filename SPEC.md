@@ -151,3 +151,38 @@ for a full refund.
 
 No schema, no SDK, no code generation. Either actor may be an AI, a
 script, or a human.
+
+## Operational notes (informal)
+
+These are not part of the protocol. They are reminders for anyone
+deploying an FCP endpoint, because the endpoint is public by design
+and the handshake invites strangers to talk to it.
+
+- **Rate limiting.** A bare FCP endpoint is a free conversational
+  API. Without limits, a single client can drive cost (compute, LLM
+  tokens, downstream calls) arbitrarily high. Put per-IP, per-token,
+  or per-session limits in front.
+- **Body size.** Free-form text means clients can POST megabytes of
+  it. Cap request bodies at a sane size (a few hundred KB is plenty
+  for almost any natural-language exchange) and return `413` above
+  that.
+- **DoS and abuse.** The endpoint is reachable by anyone on the
+  internet. Stand it up behind a firewall, WAF, or CDN with standard
+  DDoS protection. Treat `GET /fcp` (the handshake) as
+  cache-friendly; treat `POST /fcp` as expensive.
+- **Prompt injection.** Because the body is unstructured text fed to
+  an LLM, hostile inputs can try to redirect the actor. Apply the
+  same defences you would to any AI-facing surface: sandboxed tool
+  scopes, allowlists for outbound actions, human-in-the-loop for
+  high-impact operations.
+- **Auth before side effects.** Anything that costs money, leaks
+  data, or mutates state should sit behind authentication declared
+  in the handshake. Keep the handshake itself open so clients can
+  learn how to authenticate.
+- **Logging and observability.** Log requests and responses (with
+  PII handling appropriate to your jurisdiction). Without logs an
+  FCP endpoint is essentially un-debuggable, since the contract is
+  the conversation.
+
+None of this is mandated by FCP. The protocol stays minimal; the
+operator chooses how much protection to wrap around it.
