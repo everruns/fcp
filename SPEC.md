@@ -36,9 +36,9 @@ intentionally short.
   human-readable text and the semantics are conveyed by that text
   itself, not by a separate schema. FCP is a textual protocol.
 - **Session** — an optional sequence of related requests between the
-  same two actors that share state on the target side. Sessions are
-  carried by an HTTP cookie. An actor without sessions is fully
-  conformant.
+  same two actors that share state on the target side. The carrier
+  (a cookie, a header, an opaque ID) is announced during the
+  handshake. An actor without sessions is fully conformant.
 - **Handshake** — the (optional) first exchange in which the client
   actor asks the target actor what it can do, and the target replies
   in text.
@@ -58,24 +58,24 @@ A conformant target actor MUST:
 A conformant target actor SHOULD:
 
 4. Respond to `GET` on the same endpoint with a textual self-description
-   — who it is, what it can do, and any optional features it supports
-   (auth, sessions, preferred formats). This is the handshake entry
-   point.
+   — who it is, what it can do, and any optional features it supports.
+   This is the handshake.
 
-A conformant target actor MAY:
+Everything else is negotiated during the handshake, in text:
 
-- **Use cookies for session state.** Set a cookie on any response; the
-  client SHOULD echo it on subsequent requests. Sessions are optional
-  and stateless actors are fully conformant.
-- **Require authentication** via any standard HTTP mechanism
-  (`Authorization` header, bearer token, mTLS, etc.). Unauthenticated
-  requests SHOULD receive `401` with a textual body explaining how to
-  authenticate.
-- **Stream** responses using chunked transfer or SSE.
-
-That is the entire protocol. Anything else — tool calling, structured
-output, multi-step tasks — is negotiated in text between the two
-actors at runtime.
+- **Authentication** — if the target requires it, the handshake
+  describes how (e.g. "send `Authorization: Bearer <token>`, get one
+  at …"). Unauthenticated requests to a protected endpoint SHOULD
+  receive `401` with a textual body that points back at the handshake.
+- **Streaming** — if the target supports streaming (chunked transfer,
+  SSE), the handshake says so and how to opt in. Clients that don't
+  speak streaming still get a complete response.
+- **Sessions** — if the target keeps state, the handshake names the
+  cookie (or header) and the client echoes it on subsequent requests.
+  Stateless actors omit this entirely.
+- **Anything else** — tool calling, structured output, multi-step
+  tasks, preferred formats — same rule: announced in the handshake,
+  agreed in text, no out-of-band schema.
 
 ## Example: booking a flight
 
