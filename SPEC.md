@@ -29,9 +29,12 @@ intentionally short.
 - **Message** — the textual body of a single request or response. It
   MAY be plain text, Markdown, JSON, or any other text encoding. It
   carries intent in natural language; FCP imposes no schema on it.
-- **Textual protocol** — a protocol in which the wire format is
-  human-readable text and the semantics are conveyed by that text
-  itself, not by a separate schema. FCP is a textual protocol.
+- **Protocol** — a wire format in which semantics are conveyed by
+  the payload itself, not by a separate schema. FCP is text-first:
+  payloads are human-readable text by default. Non-textual
+  entrypoints (e.g. binary or multimodal payloads) may be supported
+  later; they are negotiated the same way as everything else, via
+  the handshake.
 - **Session** — an optional sequence of related requests between the
   same two actors that share state on the target side. The carrier
   (a cookie, a header, an opaque ID) is announced during the
