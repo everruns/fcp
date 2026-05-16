@@ -94,9 +94,13 @@ Content-Type: text/markdown
 
 # FlightBot
 I can search for and book commercial flights.
-- Search by origin, destination, date.
-- Book a flight (requires `Authorization: Bearer <token>`).
-- Cancel a booking by reference.
+- Search by origin, destination, date — open to anyone.
+- Book a flight — requires `Authorization: Bearer <token>`.
+  Get a token by signing up at https://flights.example.com/signup,
+  or, if you already have an account, by POSTing
+  `{"email": "...", "password": "..."}` to
+  https://flights.example.com/auth.
+- Cancel a booking by reference — same token.
 
 Talk to me in plain text, or POST JSON `{"message": "..."}`.
 I maintain session state via the `fcp_session` cookie.
@@ -124,7 +128,8 @@ Set-Cookie: fcp_session=8a1f...; Path=/; HttpOnly
 3. Lufthansa LH1178, 10:50 → 13:20, €189
 
 Reply with a number to book. Booking needs an
-`Authorization: Bearer <token>` header.
+`Authorization: Bearer <token>` header — see the handshake at
+`GET /` for how to obtain one.
 ```
 
 ### Booking
