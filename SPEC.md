@@ -200,3 +200,48 @@ and the handshake invites strangers to talk to it.
 
 None of this is mandated by FCP. The protocol stays minimal; the
 operator chooses how much protection to wrap around it.
+
+## Unexpected situations (informal)
+
+FCP deliberately does not lean on HTTP status codes to carry meaning.
+Status codes are fine as transport signals, but the actionable part
+of any response — what the client actor should do next — lives in
+the textual body.
+
+The guiding rule: **every response is actionable**. If something
+went wrong, didn't go as planned, or simply requires more from the
+client, the body should say so in plain text and tell the client
+how to proceed. Not "error 403", but "you need to be authenticated;
+get a token at https://… and try again."
+
+Common situations and what an actionable response looks like:
+
+- **Authorization needed.** Reply with text explaining what kind of
+  authorization is required, where to obtain it (signup URL,
+  OAuth flow, etc.), and what header to send next time. Pointing
+  back at the handshake is fine.
+- **Payment needed.** If the request is gated behind a fee, the
+  response should name the price, the accepted rails (e.g. x402),
+  and a link or address to settle. After payment, the client
+  retries the same request.
+- **Under load / rate limited.** Say so plainly: "I'm under
+  pressure right now, retry in ~30 seconds" or "you've used your
+  hourly quota; resets at 14:00 UTC". A `Retry-After` header is
+  welcome but the body should also carry the same information in
+  text.
+- **Ambiguous or incomplete request.** Don't fail — ask. "I'd be
+  happy to book that, but I need a passenger name and date of
+  birth." A clarifying question is a perfectly normal response.
+- **Capability gap.** If the client asked for something the actor
+  can't do, say what *is* possible and, if relevant, point at
+  another actor that can. "I only handle flights; for hotels, try
+  https://hotels.example.com."
+- **Internal failure.** Even genuine bugs should produce text the
+  client can act on: "Something went wrong on my side, request id
+  abc123, please retry in a minute or contact support@…". Avoid
+  bare `500`s with no body.
+
+The motivation is the same throughout FCP: the *conversation* is
+the contract. A response that only says `401` forces the client to
+guess; a response that says how to authenticate lets the client
+keep going on its own.
