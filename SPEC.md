@@ -79,7 +79,7 @@ Everything else is negotiated during the handshake, in text:
 
 ## Example: booking a flight
 
-Target actor at `https://flights.example.com/fcp`.
+Target actor at [`https://flights.example.com`](https://flights.example.com/fcp).
 
 ### Handshake
 
