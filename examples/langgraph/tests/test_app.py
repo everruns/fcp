@@ -14,6 +14,8 @@ def test_handshake_describes_fcp_session_cookie():
     assert app_module.SESSION_COOKIE in response.text
     assert "TableBot" in response.text
     assert "Authorization: Demo <your name>" in response.text
+    assert "plain text" in response.text
+    assert '{"message"' not in response.text
 
 
 def test_post_accepts_text_and_reuses_cookie_session(monkeypatch):
@@ -129,7 +131,7 @@ def test_model_failure_returns_actionable_text_and_cookie(monkeypatch):
     assert "Check `OPENAI_API_KEY`, model access, and account quota" in response.text
 
 
-def test_extract_message_accepts_plain_text_and_json():
+def test_extract_message_accepts_plain_text_and_tolerates_json():
     assert app_module._extract_message(b"hello") == "hello"
     assert app_module._extract_message(b'{"message": "hello json"}') == "hello json"
     assert app_module._extract_message(b'{"text": "hello text"}') == "hello text"

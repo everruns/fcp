@@ -77,10 +77,10 @@ Booking a table requires authentication. For this demo, send:
 Authorization: Demo <your name>
 ```
 
-Send me a `POST` request with plain text, or JSON shaped like:
+Send me a `POST` request with plain text, such as:
 
-```json
-{{"message": "I want dinner tomorrow for 4 people around 7pm."}}
+```text
+I want dinner tomorrow for 4 people around 7pm.
 ```
 
 I maintain conversational session state with the `{SESSION_COOKIE}` cookie.
@@ -240,7 +240,7 @@ async def fcp_endpoint(request: Request) -> PlainTextResponse:
     message = _extract_message(raw_body)
     if not message:
         return PlainTextResponse(
-            "Please send a text message, or JSON with a string `message` field.",
+            "Please send a plain text message.",
             status_code=400,
             media_type="text/plain",
         )
