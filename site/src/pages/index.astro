@@ -1,0 +1,217 @@
+---
+import { marked } from "marked";
+import specMarkdown from "../../../SPEC.md?raw";
+
+const title = "FCP - Free Communication Protocol Specification";
+const description =
+  "The Free Communication Protocol (FCP) specification: a minimal, text-first protocol for communication between actors over HTTP.";
+const githubUrl = "https://github.com/everruns/fcp";
+const specHtml = marked.parse(specMarkdown, { gfm: true });
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  headline: title,
+  description,
+  name: "Free Communication Protocol",
+  url: githubUrl,
+  codeRepository: githubUrl,
+  programmingLanguage: "HTTP",
+  inLanguage: "en",
+  license: `${githubUrl}/blob/main/LICENSE`,
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content="FCP" />
+    <meta property="article:section" content="Technical specification" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <style is:global>
+      :root {
+        color-scheme: light;
+        --bg: #ffffff;
+        --ink: #0a0a0a;
+        --muted: #404040;
+        --line: #0a0a0a;
+        --soft-line: #d4d4d4;
+        --panel: #ffffff;
+        --code: #f2f2f2;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: var(--bg);
+        color: var(--ink);
+        font: 16px/1.65 ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      }
+
+      a {
+        color: var(--ink);
+        text-decoration-thickness: 0.08em;
+        text-underline-offset: 0.18em;
+      }
+
+      main {
+        width: min(100% - 32px, 980px);
+        margin: 0 auto;
+        padding: 32px 0 72px;
+      }
+
+      .repo-nav {
+        display: flex;
+        justify-content: flex-end;
+        min-height: 32px;
+        margin-bottom: 10px;
+      }
+
+      .github-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        color: var(--ink);
+        text-decoration: none;
+      }
+
+      .github-link:hover {
+        color: var(--muted);
+      }
+
+      .github-link svg {
+        width: 26px;
+        height: 26px;
+        display: block;
+        fill: currentColor;
+      }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+      }
+
+      .spec {
+        background: var(--panel);
+        border: 1px solid var(--line);
+        border-radius: 0;
+        padding: clamp(24px, 5vw, 56px);
+        overflow-wrap: anywhere;
+      }
+
+      .spec > :first-child {
+        margin-top: 0;
+      }
+
+      .spec > :last-child {
+        margin-bottom: 0;
+      }
+
+      h1,
+      h2,
+      h3 {
+        line-height: 1.2;
+        margin: 1.6em 0 0.5em;
+      }
+
+      h1 {
+        font-size: clamp(2.1rem, 6vw, 4.1rem);
+        max-width: 14ch;
+      }
+
+      h2 {
+        padding-top: 0.15em;
+        border-top: 1px solid var(--soft-line);
+        font-size: clamp(1.45rem, 3vw, 2rem);
+      }
+
+      h3 {
+        font-size: 1.2rem;
+      }
+
+      p,
+      ul,
+      ol,
+      pre {
+        margin: 0.85em 0;
+      }
+
+      li + li {
+        margin-top: 0.25em;
+      }
+
+      code {
+        border-radius: 0;
+        background: var(--code);
+        padding: 0.12em 0.28em;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.92em;
+      }
+
+      pre {
+        overflow: auto;
+        border: 1px solid var(--line);
+        border-radius: 0;
+        background: #0a0a0a;
+        color: #ffffff;
+        padding: 18px;
+      }
+
+      pre code {
+        background: transparent;
+        padding: 0;
+        color: inherit;
+      }
+
+      blockquote {
+        margin: 1em 0;
+        padding-left: 1em;
+        border-left: 4px solid var(--line);
+        color: var(--muted);
+      }
+
+      @media (max-width: 680px) {
+        main {
+          padding-top: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <nav class="repo-nav" aria-label="Repository">
+        <a class="github-link" href={githubUrl} rel="noreferrer" aria-label="GitHub repository">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.04c-3.34.72-4.04-1.61-4.04-1.61-.55-1.39-1.33-1.76-1.33-1.76-1.09-.74.08-.73.08-.73 1.21.09 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.49 1 .11-.78.42-1.3.76-1.6-2.66-.31-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23A11.5 11.5 0 0 1 12 5.8c1.02.01 2.05.14 3 .41 2.29-1.55 3.3-1.23 3.3-1.23.65 1.65.24 2.87.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.62-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.69.83.58A12 12 0 0 0 12 0Z" />
+          </svg>
+          <span class="sr-only">GitHub</span>
+        </a>
+      </nav>
+      <article class="spec" set:html={specHtml} />
+    </main>
+  </body>
+</html>
