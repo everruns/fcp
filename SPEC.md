@@ -28,7 +28,7 @@ intentionally short.
   one that receives it is the *target actor*. Roles may swap freely
   across requests.
 - **FCP endpoint** — an HTTP(S) URL operated by a target actor that
-  accepts FCP requests. Conventionally `/fcp`, but any path works.
+  accepts FCP requests. The path is up to the operator.
 - **Message** — the textual body of a single request or response. It
   MAY be plain text, Markdown, JSON, or any other text encoding. It
   carries intent in natural language; FCP imposes no schema on it.
@@ -79,12 +79,12 @@ Everything else is negotiated during the handshake, in text:
 
 ## Example: booking a flight
 
-Target actor at [`https://flights.example.com`](https://flights.example.com/fcp).
+Target actor at `https://flights.example.com`.
 
 ### Handshake
 
 ```http
-GET /fcp HTTP/1.1
+GET / HTTP/1.1
 Host: flights.example.com
 ```
 
@@ -105,7 +105,7 @@ I maintain session state via the `fcp_session` cookie.
 ### Request
 
 ```http
-POST /fcp HTTP/1.1
+POST / HTTP/1.1
 Host: flights.example.com
 Content-Type: text/plain
 
@@ -130,7 +130,7 @@ Reply with a number to book. Booking needs an
 ### Booking
 
 ```http
-POST /fcp HTTP/1.1
+POST / HTTP/1.1
 Host: flights.example.com
 Content-Type: text/plain
 Cookie: fcp_session=8a1f...
@@ -168,8 +168,8 @@ and the handshake invites strangers to talk to it.
   that.
 - **DoS and abuse.** The endpoint is reachable by anyone on the
   internet. Stand it up behind a firewall, WAF, or CDN with standard
-  DDoS protection. Treat `GET /fcp` (the handshake) as
-  cache-friendly; treat `POST /fcp` as expensive.
+  DDoS protection. Treat `GET` on the endpoint (the handshake) as
+  cache-friendly; treat `POST` as expensive.
 - **Prompt injection.** Because the body is unstructured text fed to
   an LLM, hostile inputs can try to redirect the actor. Apply the
   same defences you would to any AI-facing surface: sandboxed tool
