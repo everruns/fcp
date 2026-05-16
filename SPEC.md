@@ -24,7 +24,7 @@ intentionally short.
 - **Actor** — any participant in the communication. The actor that
   initiates a request is the *client actor*; the one that receives
   it is the *target actor*. Roles may swap freely across requests.
-- **FCP endpoint** — an HTTP(S) URL operated by a target actor that
+- **Endpoint** — an HTTP(S) URL operated by a target actor that
   accepts FCP requests. The path is up to the operator.
 - **Message** — the textual body of a single request or response. It
   MAY be plain text, Markdown, JSON, or any other text encoding. It
@@ -157,10 +157,10 @@ script, or a human.
 ## Operational notes (informal)
 
 These are not part of the protocol. They are reminders for anyone
-deploying an FCP endpoint, because the endpoint is public by design
+deploying an endpoint, because the endpoint is public by design
 and the handshake invites strangers to talk to it.
 
-- **Rate limiting.** A bare FCP endpoint is a free conversational
+- **Rate limiting.** A bare endpoint is a free conversational
   API. Without limits, a single client can drive cost (compute, LLM
   tokens, downstream calls) arbitrarily high. Put per-IP, per-token,
   or per-session limits in front.
@@ -183,7 +183,7 @@ and the handshake invites strangers to talk to it.
   learn how to authenticate.
 - **Logging and observability.** Log requests and responses (with
   PII handling appropriate to your jurisdiction). Without logs an
-  FCP endpoint is essentially un-debuggable, since the contract is
+  endpoint is essentially un-debuggable, since the contract is
   the conversation.
 - **Pay-per-request via agent payment protocols.** Because the
   endpoint is plain HTTP, it composes naturally with agent-to-agent
