@@ -21,12 +21,9 @@ intentionally short.
 
 ## Glossary
 
-- **Actor** — any participant that can send and receive HTTP requests
-  containing text. An actor may be a software agent, a service, a
-  script, or a human with `curl`. FCP does not distinguish between
-  them. The actor that initiates a request is the *client actor*; the
-  one that receives it is the *target actor*. Roles may swap freely
-  across requests.
+- **Actor** — any participant in the communication. The actor that
+  initiates a request is the *client actor*; the one that receives
+  it is the *target actor*. Roles may swap freely across requests.
 - **FCP endpoint** — an HTTP(S) URL operated by a target actor that
   accepts FCP requests. The path is up to the operator.
 - **Message** — the textual body of a single request or response. It
