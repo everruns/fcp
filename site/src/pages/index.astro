@@ -1,5 +1,6 @@
 ---
 import { marked } from "marked";
+import { canonicalUrl } from "../site-url.js";
 import specMarkdown from "../../../SPEC.md?raw";
 
 const title = "FCP - Free Communication Protocol Specification";
@@ -13,7 +14,7 @@ const jsonLd = {
   headline: title,
   description,
   name: "Free Communication Protocol",
-  url: githubUrl,
+  url: canonicalUrl,
   codeRepository: githubUrl,
   programmingLanguage: "HTTP",
   inLanguage: "en",
@@ -30,9 +31,11 @@ const jsonLd = {
     <meta name="description" content={description} />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#ffffff" />
+    <link rel="canonical" href={canonicalUrl} />
     <meta property="og:type" content="article" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
     <meta property="og:site_name" content="FCP" />
     <meta property="article:section" content="Technical specification" />
     <meta name="twitter:card" content="summary" />
