@@ -27,6 +27,11 @@ test("includes SEO metadata and repository link", () => {
   assert.match(html, /aria-label="GitHub repository"/);
 });
 
+test("loads the Google tag (gtag.js)", () => {
+  assert.match(html, /https:\/\/www\.googletagmanager\.com\/gtag\/js\?id=G-XYFQSGRXXV/);
+  assert.match(html, /gtag\('config', 'G-XYFQSGRXXV'\)|gtag\("config", "G-XYFQSGRXXV"\)/);
+});
+
 test("publishes crawl metadata for the canonical URL", () => {
   assert.match(robots, /User-agent: \*/);
   assert.match(robots, /Allow: \//);
